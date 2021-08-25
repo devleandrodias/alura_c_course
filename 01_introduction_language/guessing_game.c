@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
 
 int main()
 {
@@ -6,10 +9,15 @@ int main()
   printf("* Welcome to the guessing game *\n");
   printf("********************************\n");
 
-  int secretNumber = 42;
+  srand(time(0)); // Random (S = Seed, rand = Random)
+
+  int random = rand();
+
+  int secretNumber = random % 100;
   int userEstimate;
   int win = 0;
   int attempts = 0;
+  double score = 1000;
 
   while (1)
   {
@@ -33,8 +41,7 @@ int main()
     if (secretNumber == userEstimate)
     {
       printf("\nYOU WIN!\n");
-
-      win = 1;
+      break;
     }
 
     else if (greater)
@@ -46,9 +53,17 @@ int main()
     {
       printf("\nYour estimate is less than the secret number\n");
     }
+
+    double lostPoints = (userEstimate - secretNumber) / (double)2;
+
+    score -= fabs(lostPoints);
   }
 
-  printf("\nGAME OVER! YOU WON IN %dst ATTEMP!\n", attempts);
+  printf("\nGAME OVER! YOU WON IN %dst ATTEMP! AND YOUR SCORE IS %.1fpt\n", attempts, score);
 
   return 0;
 }
+
+// short (2 bytes), int (4 bytes), long (8 bytes) - Integers
+
+// float (4 bytes), double (8 bytes) - Decimals
