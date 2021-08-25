@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-#define ATTEMPTS 5 // const
-
 int main()
 {
   printf("********************************\n");
@@ -10,10 +8,14 @@ int main()
 
   int secretNumber = 42;
   int userEstimate;
+  int win = 0;
+  int attempts = 0;
 
-  for (int i = 1; i <= ATTEMPTS; i++)
+  while (1)
   {
-    printf("\nAttempt: %d of %d \n", i, ATTEMPTS);
+    attempts++;
+
+    printf("\nAttempt: %d\n", attempts);
 
     printf("\nDigit your estimate: ");
     scanf("%d", &userEstimate);
@@ -23,7 +25,6 @@ int main()
     if (userEstimate < 0)
     {
       printf("\nNegative numbers are not valid!\n");
-      i--;
       continue;
     }
 
@@ -32,7 +33,8 @@ int main()
     if (secretNumber == userEstimate)
     {
       printf("\nYOU WIN!\n");
-      break;
+
+      win = 1;
     }
 
     else if (greater)
@@ -44,11 +46,9 @@ int main()
     {
       printf("\nYour estimate is less than the secret number\n");
     }
-
-    printf("\nYOU LOST! TRY AGAIN!\n");
   }
 
-  printf("\nGAME OVER!\n");
+  printf("\nGAME OVER! YOU WON IN %dst ATTEMP!\n", attempts);
 
   return 0;
 }
