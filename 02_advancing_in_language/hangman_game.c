@@ -1,53 +1,85 @@
 #include <stdio.h>
 #include <string.h>
 
+char secretWord[20];
+char estimates[26];
+int estimate = 0;
+
+void showHeader()
+{
+  printf("************************\n");
+  printf("      HANGMAN GAME      \n");
+  printf("************************\n");
+}
+
+void chooseWord()
+{
+  sprintf(secretWord, "TESLA");
+}
+
+void kick(int *estimate, char estimates[26])
+{
+  char estimateCharacter;
+  printf("\nDigit your estimate: ");
+  scanf(" %c", &estimateCharacter);
+
+  estimates[*estimate] = estimateCharacter;
+
+  (*estimate)++;
+}
+
+int alreadyKicked(char letter)
+{
+  int show = 0;
+
+  for (int j = 0; j < estimate; j++)
+  {
+    if (estimates[j] == letter)
+    {
+      show = 1;
+      break;
+    }
+  }
+
+  return show;
+}
+
+void drawGallows()
+{
+  printf("\n");
+
+  for (int i = 0; i < strlen(secretWord); i++)
+  {
+
+    if (alreadyKicked(secretWord[i]))
+    {
+      printf("%c ", secretWord[i]);
+    }
+
+    else
+    {
+      printf("_ ");
+    }
+  }
+
+  printf("\n");
+}
+
 int main()
 {
-  char estimates[26];
-  char secretWord[20];
-
   int win = 0;
   int lost = 0;
-  int estimate = 0;
 
-  sprintf(secretWord, "TESLA");
+  showHeader();
+
+  chooseWord();
 
   do
   {
-    printf("\n");
+    drawGallows();
 
-    for (int i = 0; i < strlen(secretWord); i++)
-    {
-      int show = 0;
+    kick(&estimate, estimates);
 
-      for (int j = 0; j < estimate; j++)
-      {
-        if (estimates[j] == secretWord[i])
-        {
-          show = 1;
-          break;
-        }
-      }
-
-      if (show)
-      {
-        printf("%c ", secretWord[i]);
-      }
-
-      else
-      {
-        printf("_ ");
-      }
-    }
-
-    printf("\n");
-
-    char estimateCharacter;
-    printf("\nDigit your estimate: ");
-    scanf(" %c", &estimateCharacter);
-
-    estimates[estimate] = estimateCharacter;
-    estimate++;
   } while (!win && !lost);
 
   return 0;
