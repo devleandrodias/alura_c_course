@@ -1,3 +1,5 @@
+#define SIZE_SECRET_WORD 20
+
 // Header files
 
 void kick(int *estimate, char estimates[26]);

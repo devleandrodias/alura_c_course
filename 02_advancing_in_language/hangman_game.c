@@ -5,8 +5,7 @@
 
 #include "hangman_game.h"
 
-// Global variables
-char secretWord[20];
+char secretWord[SIZE_SECRET_WORD];
 char estimates[26];
 int estimate = 0;
 
@@ -18,7 +17,7 @@ void addNewWord()
 
   if (option == 'y')
   {
-    char newWord[20];
+    char newWord[SIZE_SECRET_WORD];
     printf("What new word? ");
     scanf("%s", newWord);
 
