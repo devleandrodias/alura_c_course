@@ -1,64 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "map.h"
 #include "pac_man.h"
 
-char **map;
-int lines;
-int columns;
+MAP m;
+POSITION hero;
 
-void freeMemory()
+void move(char command)
 {
-  for (int i = 0; i < lines; i++)
-  {
-    free(map[i]);
-  }
+  int x;
+  int y;
 
-  free(map);
+  m.matrices[hero.x][hero.y] = '.';
+
+  switch (command)
+  {
+  case 'a':
+    m.matrices[hero.x][hero.y - 1] = '@';
+    hero.y--;
+    break;
+  case 'w':
+    m.matrices[hero.x - 1][hero.y] = '@';
+    hero.x--;
+    break;
+  case 's':
+    m.matrices[hero.x + 1][hero.y] = '@';
+    hero.x++;
+    break;
+  case 'd':
+    m.matrices[hero.x][hero.y + 1] = '@';
+    hero.y++;
+    break;
+  }
 }
 
-void dynamicMapAllocation()
+int finish()
 {
-  map = malloc(sizeof(char *) * lines);
-
-  for (int i = 0; i < lines; i++)
-  {
-    map[i] = malloc(sizeof(char) * (columns + 1));
-  }
-}
-
-void readMap()
-{
-  FILE *file = fopen("map.txt", "r");
-
-  if (file == 0)
-  {
-    printf("Error loading map...");
-    exit(1);
-  }
-
-  fscanf(file, "%d %d", &lines, &columns);
-
-  dynamicMapAllocation();
-
-  for (int i = 0; i < 5; i++)
-  {
-    fscanf(file, "%s", map[i]);
-  }
-
-  fclose(file);
+  return 0;
 }
 
 int main()
 {
-  readMap();
+  readMap(&m);
 
-  for (int i = 0; i < 5; i++)
+  findMap(&m, &hero, '@');
+
+  do
   {
-    printf("%s\n", map[i]);
-  }
+    printMap(&m);
 
-  freeMemory();
+    char command;
+    scanf(" %c", &command);
+    move(command);
+
+  } while (!finish());
+
+  freeMap(&m);
 
   return 0;
 }

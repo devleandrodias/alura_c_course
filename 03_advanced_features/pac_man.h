@@ -1,3 +1,2 @@
-void freeMemory();
-void dynamicMapAllocation();
-void readMap();
+void move(char command);
+int finish();
