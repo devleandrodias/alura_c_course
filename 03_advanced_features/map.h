@@ -1,6 +1,8 @@
 #define HERO '@'
 #define GOST 'G'
 #define EMPTY '.'
+#define BOMB '*'
+#define EXPLODE_BOMB 'b'
 #define VERTICAL_WALL '|'
 #define HORIZONTAL_WALL '-'
 

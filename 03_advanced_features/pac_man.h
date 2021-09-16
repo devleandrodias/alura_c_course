@@ -5,6 +5,8 @@
 
 void gosts();
 void move(char command);
+void recursiveExplodeBomb();
+void explodeBomb(int x, int y, int newX, int newY, int quantity);
 
 int finish();
 int commandIsValid(char command);

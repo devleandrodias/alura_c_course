@@ -6,8 +6,8 @@
 #include "pac_man.h"
 
 MAP m;
-
 POSITION hero;
+int hasBomb = 0;
 
 int moveGost(int currentX, int currentY, int *destinyX, int *destinyY)
 {
@@ -96,6 +96,11 @@ void move(char command)
   if (!canWalk(&m, HERO, nextX, nextY))
     return;
 
+  if (isCharacter(&m, nextX, nextY, BOMB))
+  {
+    hasBomb = 1;
+  }
+
   walkOnTheMap(&m, hero.x, hero.y, nextX, nextY);
 
   hero.x = nextX;
@@ -109,6 +114,40 @@ int finish()
   return (!findOnTheMap(&m, &p, HERO));
 }
 
+void recursiveExplodeBomb()
+{
+  if (!hasBomb)
+    return;
+
+  explodeBomb(hero.x, hero.y, 0, 1, 3);
+  explodeBomb(hero.x, hero.y, 0, -1, 3);
+  explodeBomb(hero.x, hero.y, 1, 0, 3);
+  explodeBomb(hero.x, hero.y, -1, 0, 3);
+
+  hasBomb = 0;
+}
+
+void explodeBomb(int x, int y, int sumX, int sumY, int quantity)
+{
+  system("clear");
+
+  if (quantity == 0)
+    return;
+
+  int newX = x + sumX;
+  int newY = y + sumY;
+
+  if (!positionIsValid(&m, newX, newY))
+    return;
+
+  if (isWall(&m, newX, newY))
+    return;
+
+  m.matrices[newX][newY] = EMPTY;
+
+  explodeBomb(newX, newY, sumX, sumY, quantity - 1);
+}
+
 int main()
 {
   system("clear");
@@ -119,11 +158,19 @@ int main()
 
   do
   {
+    printf("Has bomb? %s\n", (hasBomb ? "Yes" : "No"));
+
     printMap(&m);
 
     char command;
     scanf(" %c", &command);
     move(command);
+
+    if (command == EXPLODE_BOMB)
+    {
+      recursiveExplodeBomb();
+    }
+
     gosts();
 
   } while (!finish());
