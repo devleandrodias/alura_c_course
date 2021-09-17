@@ -1,3 +1,6 @@
+#ifndef _MAP_H
+#define _MAP_H
+
 #define HERO '@'
 #define GOST 'G'
 #define EMPTY '.'
@@ -31,7 +34,8 @@ int isCharacter(MAP *m, int x, int y, char character);
 
 void freeMap(MAP *m);
 void readMap(MAP *m);
-void printMap(MAP *m);
 void dynamicMapAllocation(MAP *m);
 void copyMap(MAP *destiny, MAP *origin);
 void walkOnTheMap(MAP *m, int originX, int originY, int destinyX, int destinyY);
+
+#endif

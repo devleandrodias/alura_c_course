@@ -115,11 +115,3 @@ void readMap(MAP *m)
 
   fclose(file);
 }
-
-void printMap(MAP *m)
-{
-  for (int i = 0; i < 5; i++)
-  {
-    printf("%s\n", m->matrices[i]);
-  }
-}

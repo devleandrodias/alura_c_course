@@ -1,3 +1,6 @@
+#ifndef _PAC_MAN_H
+#define _PAC_MAN_H
+
 #define UP 'w'
 #define DOWN 's'
 #define LEFT 'a'
@@ -11,3 +14,5 @@ void explodeBomb(int x, int y, int newX, int newY, int quantity);
 int finish();
 int commandIsValid(char command);
 int moveGost(int currentX, int currentY, int *destinyX, int *destinyY);
+
+#endif

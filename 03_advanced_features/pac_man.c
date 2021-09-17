@@ -1,7 +1,8 @@
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
+#include "ui.h"
 #include "map.h"
 #include "pac_man.h"
 
